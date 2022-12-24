@@ -38,7 +38,7 @@ function getCookie(cname) {
 var getLogedInUser = async () => {
   if (!!authToken) {
     var tbody = document.getElementById("users");
-    const data = await fetch(`http://localhost:3000/profile`, {
+    const data = await fetch(`/profile`, {
       headers: {
         "content-type": "application/json",
         Authorization: "Bearer " + authToken,
@@ -82,7 +82,7 @@ var login = async () => {
 
   document.getElementById("msg-login").innerHTML = "";
   if (password != "" && email != "") {
-    const data = await fetch(`http://localhost:3000/login/`, {
+    const data = await fetch(`/login/`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -141,7 +141,7 @@ var saveUser = async () => {
     if (emailPattern.test(email)) {
       if (passwordPattern.test(password)) {
         if (!userId) {
-          await fetch(`http://localhost:3000/users/`, {
+          await fetch(`/users/`, {
             method: "post",
 
             headers: {
@@ -193,7 +193,7 @@ var updateUser = async () => {
     document.getElementById("userName-update").value = "";
     if (name != "" && email != "" && password != "" && userName != "") {
       if (emailPattern.test(email)) {
-        await fetch(`http://localhost:3000/update-account`, {
+        await fetch(`/update-account`, {
           method: "put",
 
           headers: {
@@ -216,7 +216,7 @@ var updateUser = async () => {
 
 var deleteUser = async (userId) => {
   if (!!authToken) {
-    await fetch(`http://localhost:3000/remove-account/`, {
+    await fetch(`/remove-account/`, {
       method: "delete",
       headers: {
         "content-type": "application/json",
@@ -240,7 +240,7 @@ var game = async () => {
   }
 
   if (!!authToken) {
-    const data = await fetch("http://localhost:3000/users/", {
+    const data = await fetch("/users/", {
       headers: {
         Authorization: "Bearer " + authToken,
       },
@@ -268,7 +268,7 @@ var game = async () => {
 var getGameId = async () => {
   console.log("getGameId");
   if (!!authToken) {
-    const data = await fetch("http://localhost:3000/getGameId/", {
+    const data = await fetch("/getGameId/", {
       headers: {
         Authorization: "Bearer " + authToken,
       },
@@ -294,7 +294,7 @@ var notification = async () => {
   const submiter = document.getElementById("myReq");
 
   if (!!authToken) {
-    const data = await fetch("http://localhost:3000/game-notification/", {
+    const data = await fetch("/game-notification/", {
       headers: {
         Authorization: "Bearer " + authToken,
       },
@@ -319,7 +319,7 @@ var selectUser = async (userId) => {
     const status = document.getElementById("status").value;
     const turn = document.getElementById("turn").value;
 
-    await fetch(`http://localhost:3000/game/${userId}`, {
+    await fetch(`/game/${userId}`, {
       method: "post",
 
       headers: {
@@ -342,7 +342,7 @@ var updateStatus = async (pId, nId) => {
   if (!!authToken) {
     const status = document.getElementById("status").value;
     status.value = "";
-    await fetch(`http://localhost:3000/inprocess/${userId}`, {
+    await fetch(`/inprocess/${userId}`, {
       method: "put",
 
       headers: {
@@ -419,7 +419,7 @@ var btn = async (id, gameId) => {
 
   let btnvalue = btnValue.innerText;
   if (!!authToken) {
-    await fetch(`http://localhost:3000/turnPlayer/${gameId}`, {
+    await fetch(`/turnPlayer/${gameId}`, {
       method: "post",
 
       headers: {
@@ -442,7 +442,7 @@ var showValues = async (gameId) => {
   }
 
   if (!!authToken) {
-    const data = await fetch(`http://localhost:3000/getAllValues/${gameId}`, {
+    const data = await fetch(`/getAllValues/${gameId}`, {
       headers: {
         Authorization: "Bearer " + authToken,
       },
@@ -472,7 +472,7 @@ var checkWinner = async (gameId) => {
   const Winner = document.getElementById("win");
 
   if (!!authToken) {
-    const data = await fetch(`http://localhost:3000/checkWinner/${gameId}`, {
+    const data = await fetch(`/checkWinner/${gameId}`, {
       headers: {
         Authorization: "Bearer " + authToken,
       },
@@ -510,7 +510,7 @@ function disableAll() {
 
 var deleteGameState = async (gameId) => {
   if (!!authToken) {
-    await fetch(`http://localhost:3000/getAllValues/${gameId}`, {
+    await fetch(`/getAllValues/${gameId}`, {
       method: "delete",
       headers: {
         "content-type": "application/json",
