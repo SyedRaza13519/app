@@ -1,7 +1,7 @@
 {
   "development": {
     "host": "0.0.0.0",
-    "storage": "api_db.sqlite",
+    "storage": "db/api_db.sqlite",
     "dialect": "sqlite",
     "pool": {
       "max": 5,
