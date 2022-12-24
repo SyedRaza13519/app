@@ -1,0 +1,43 @@
+body.modal-open {
+  overflow: scroll;
+}
+.modal-backdrop {
+  display: none;
+}
+
+.group button {
+  width: 133px;
+  height: 100px;
+  font-size: 40px;
+  border: 1px solid red;
+  background-color: rgb(4, 4, 4);
+  color: white;
+  text-align: center;
+}
+.result {
+  margin-left: 500px;
+  padding: 2px;
+  text-align: center;
+  width: 398px;
+  font-size: 24px;
+  color: white;
+  background-color: rgb(192, 26, 26);
+}
+.result button {
+  width: 133px;
+  margin-bottom: 15px;
+  font-size: 24px;
+  height: 50px;
+  border-radius: 20px;
+}
+button:hover {
+  background-color: rgb(99, 159, 99);
+}
+.container-box {
+  position: relative;
+  display: flex;
+
+  margin-left: 500px;
+  width: 400px;
+  background-color: rgb(26, 192, 192);
+}
