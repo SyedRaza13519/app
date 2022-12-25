@@ -1,22 +1,18 @@
 {
   "development": {
-    "host": "0.0.0.0",
-    "storage": "db/api_db.sqlite",
-    "dialect": "sqlite",
-    "pool": {
-      "max": 5,
-      "min": 0,
-      "idle": 10000
-    }
+    "username": "root",
+    "password": "FzD3BMvil2H5kEhPv7rD",
+    "database": "railway",
+    "host": "containers-us-west-52.railway.app",
+    "port": 7844,
+    "dialect": "mysql"
   },
   "production": {
-    "host": "0.0.0.0",
-    "storage": "db/api_db.sqlite",
-    "dialect": "sqlite",
-    "pool": {
-      "max": 5,
-      "min": 0,
-      "idle": 10000
-    }
+    "username": "root",
+    "password": "FzD3BMvil2H5kEhPv7rD",
+    "database": "railway",
+    "host": "containers-us-west-52.railway.app",
+    "port": 7844,
+    "dialect": "mysql"
   }
 }
