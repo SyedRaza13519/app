@@ -16,6 +16,16 @@ const config = {
       min: 0,
       idle: 10000,
     },
+    production: {
+      host: "0.0.0.0",
+      storage: "db/api_db.sqlite",
+      dialect: "sqlite",
+      pool: {
+        max: 5,
+        min: 0,
+        idle: 10000,
+      },
+    },
   },
 };
 
