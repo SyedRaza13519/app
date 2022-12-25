@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "sudo chmod 777 -R db & node ./bin/www"
+    "local": " node ./bin/www",
+    "start": " node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
