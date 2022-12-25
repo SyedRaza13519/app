@@ -410,7 +410,7 @@ var gameBoard = async (gameId) => {
   showValues(gameId);
   myinterval = setInterval(function () {
     showValues(gameId);
-  }, 2000);
+  }, 500);
 };
 
 var btn = async (id, gameId) => {
@@ -547,7 +547,6 @@ var removeFromIfLogedIn = async () => {
     document.getElementById("game").style.display = "none";
 
     document.getElementById("data-request").style.display = "none";
-    logout();
   }
 };
 
