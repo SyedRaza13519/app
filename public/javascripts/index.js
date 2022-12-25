@@ -410,7 +410,7 @@ var gameBoard = async (gameId) => {
   showValues(gameId);
   myinterval = setInterval(function () {
     showValues(gameId);
-  }, 3000);
+  }, 2000);
 };
 
 var btn = async (id, gameId) => {
