@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       status: DataTypes.STRING,
       turn: DataTypes.STRING,
+      winner: DataTypes.STRING,
     },
     {
       sequelize,

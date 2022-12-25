@@ -22,7 +22,7 @@ router.get(
 );
 router.put("/inprocess/:userId", authenticate, HomeController.inprocesGame);
 router.get("/getGameId/", authenticate, HomeController.getGameId);
-router.get("/gameBoard/:gameId", authenticate, HomeController.getGameId);
+router.get("/gameBoard/:gameId", HomeController.gameBoard);
 router.put("/turnUpdate/:gameId", authenticate, HomeController.turnPlayer);
 router.post("/turnPlayer/:gameId", authenticate, HomeController.turnPlayer);
 router.get("/getAllValues/:gameId", authenticate, HomeController.getAllValues);
@@ -31,6 +31,6 @@ router.delete(
   authenticate,
   HomeController.deleteAllValues
 );
-router.get("/checkWinner/:gameId", HomeController.checkWinner);
+router.put("/checkWinner/:gameId", HomeController.checkWinner);
 
 module.exports = router;

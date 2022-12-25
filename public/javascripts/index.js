@@ -229,7 +229,6 @@ var deleteUser = async (userId) => {
   }
 };
 var game = async () => {
-  console.log("Game");
   const welcome = document.getElementById("welcome");
   const player2Id = document.getElementById("player2Id");
 
@@ -253,6 +252,7 @@ var game = async () => {
       <div class="d-flex mt-3 ">
       <input type="hidden" id="turn" value="player2" >
           <input type="hidden" id="status" value="Pending">
+          <input type="hidden" id="winner" value="No">
           <input class="text" value="${user.name}">
           <button class="" onclick="selectUser(${user.id})">Sent Request</button>
          
@@ -266,7 +266,6 @@ var game = async () => {
 };
 
 var getGameId = async () => {
-  console.log("getGameId");
   if (!!authToken) {
     const data = await fetch("/getGameId/", {
       headers: {
@@ -276,9 +275,10 @@ var getGameId = async () => {
 
     const games = await data.json();
     const player1Id = document.getElementById("myReq");
-
+    const completed = document.getElementById("completed");
     games.forEach((game) => {
-      player1Id.innerHTML += `
+      if (game?.status != "Complete") {
+        player1Id.innerHTML += `
       <div class="d-flex  mt-3"><input class="" value="${game.Player2.name}">
       
               <button class="" onclick="gameBoard(${game.id}); ">Start Game</button>
@@ -286,11 +286,15 @@ var getGameId = async () => {
             
             
             `;
+      }
+      if (game?.status == "Complete") {
+        completed.innerHTML += `<div class="d-flex mt-3 col-10"><input class="col-5" type="text" id="status" value="${game.status}" > <input class="col-5" value=" ${game.Player1.name}">
+            </div>`;
+      }
     });
   }
 };
 var notification = async () => {
-  console.log("notifi");
   const submiter = document.getElementById("myReq");
 
   if (!!authToken) {
@@ -302,22 +306,29 @@ var notification = async () => {
 
     const games = await data.json();
 
+    const completed = document.getElementById("completed");
     games.forEach((game) => {
-      submiter.innerHTML += `
+      if (game?.status != "Complete") {
+        submiter.innerHTML += `
           
           <div class="d-flex mt-3 col-4"><input type="hidden" id="status" value="${game.status}" > <input value=" ${game.Player1.name}">
           <button class="" onclick="updateStatus(${game.Player1.id},${game.id} ); ">Start</button></div>
           
         
         `;
+      }
+      if (game?.status == "Complete") {
+        completed.innerHTML += `<div class="d-flex mt-3 col-10"><input class="col-5" type="text" id="status" value="${game.status}" > <input class="col-5" value=" ${game.Player1.name}">
+      </div>`;
+      }
     });
   }
 };
 var selectUser = async (userId) => {
-  console.log("select");
   if (!!authToken) {
     const status = document.getElementById("status").value;
     const turn = document.getElementById("turn").value;
+    const winner = document.getElementById("winner").value;
 
     await fetch(`/game/${userId}`, {
       method: "post",
@@ -327,7 +338,7 @@ var selectUser = async (userId) => {
         Authorization: "Bearer " + authToken,
       },
 
-      body: JSON.stringify({ status, turn }),
+      body: JSON.stringify({ status, turn, winner }),
     });
     notification();
     setInterval(notification, 3000);
@@ -335,7 +346,6 @@ var selectUser = async (userId) => {
 };
 
 var updateStatus = async (pId, nId) => {
-  console.log("update");
   userId = pId;
   gameId = nId;
 
@@ -357,7 +367,6 @@ var updateStatus = async (pId, nId) => {
 };
 
 var gameBoard = async (gameId) => {
-  console.log("gameboard");
   document.getElementById("data-request").style.display = "none";
   document.getElementById("data-Game").style.display = "block";
   if (!!authToken) {
@@ -404,13 +413,28 @@ var gameBoard = async (gameId) => {
     </div>
     <div class="container">
       <h3 id="win">Try to be a Winner</h3>
-      <button class="btn btn-danger" onclick="deleteGameState(${gameId})">Re-Set</button>
+      
     </div>`;
+
+    const data = await fetch(`/gameBoard/${gameId}`, {
+      headers: {
+        Authorization: "Bearer " + authToken,
+      },
+    });
+
+    const games = await data.json();
+
+    const playerTurn = document.getElementById("playerTurn");
+
+    if (games?.turn) {
+      playerTurn.innerHTML = games.turn;
+    }
   }
+
   showValues(gameId);
   myinterval = setInterval(function () {
     showValues(gameId);
-  }, 500);
+  }, 2000);
 };
 
 var btn = async (id, gameId) => {
@@ -434,7 +458,6 @@ var btn = async (id, gameId) => {
 };
 
 var showValues = async (gameId) => {
-  console.log("showval");
   if (authUser?.name) {
     welcome.innerHTML = authUser?.name;
   } else {
@@ -463,26 +486,31 @@ var showValues = async (gameId) => {
 };
 
 var checkWinner = async (gameId) => {
-  console.log("check");
   if (authUser?.name) {
     welcome.innerHTML = authUser?.name;
   } else {
     welcome.innerHTML = "";
   }
-  const Winner = document.getElementById("win");
-
+  const result = document.getElementById("win");
+  const status = undefined;
+  const winner = undefined;
   if (!!authToken) {
     const data = await fetch(`/checkWinner/${gameId}`, {
+      method: "put",
+
       headers: {
+        "content-type": "application/json",
         Authorization: "Bearer " + authToken,
       },
+
+      body: JSON.stringify({ status, winner }),
     });
 
     const wons = await data.json();
 
     if (wons?.a) {
       window.alert(wons.a + " " + "Player Won");
-      Winner.innerHTML = `${wons.a} Player Is Winner`;
+      result.innerHTML = `${wons.a} Player Is Winner`;
 
       disableAll();
       myStop();
@@ -491,12 +519,10 @@ var checkWinner = async (gameId) => {
 };
 
 function myStop() {
-  console.log("work");
   clearInterval(myinterval);
   clearInterval(notification);
 }
 function disableAll() {
-  console.log("disabled");
   document.getElementById("b1").disabled = true;
   document.getElementById("b2").disabled = true;
   document.getElementById("b3").disabled = true;
@@ -522,7 +548,6 @@ var deleteGameState = async (gameId) => {
   }
 };
 var removeFromIfLogedIn = async () => {
-  console.log("remove");
   msg.innerHTML = "";
   if (!!authToken) {
     await getLogedInUser();

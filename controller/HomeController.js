@@ -27,7 +27,7 @@ class HomeController {
       const token = jwt.sign(user.dataValues, secret, {
         expiresIn: "5400s",
       });
-      console.log("work");
+
       return res.json({ token });
     } else {
       return res.status(403).json({ error: "Not Allowed" });
@@ -132,7 +132,7 @@ class HomeController {
     const result = await Game.findOne({
       where: { id: req.params.gameId },
     });
-
+    console.log(result);
     return res.json(result);
   }
 
@@ -196,8 +196,10 @@ class HomeController {
       }
     }
   }
+
   static async checkWinner(req, res, next) {
     const result = await GameState.findAll({
+      include: Game,
       where: {
         gameId: req.params.gameId,
       },
@@ -219,29 +221,35 @@ class HomeController {
       gameState[state.btnName] = state.btnValue;
     });
 
-    console.log(gameState);
-
     for (var i = 0; i < winningConditions.length; i++) {
-      let roundWon = false;
       for (let i = 0; i <= 7; i++) {
         const winCondition = winningConditions[i];
         let a = gameState[winCondition[0]];
         let b = gameState[winCondition[1]];
         let c = gameState[winCondition[2]];
 
-        if (a === "" || b === "" || c === "") {
-          continue;
-        }
-
         if (a === b && b === c) {
           console.log(a);
-          roundWon = true;
+          const play = {
+            winner: a,
+            status: "Complete",
+          };
+          console.log(play);
+          await Game.update(play, {
+            where: {
+              id: req.params.gameId,
+            },
+          });
 
-          return res.json({ roundWon, a });
+          return res.json({ a });
         }
       }
     }
   }
+  catch(err) {
+    console.log(err);
+  }
+
   static async getAllValues(req, res, next) {
     const result = await GameState.findAll({
       include: Game,

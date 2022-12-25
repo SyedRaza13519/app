@@ -17,6 +17,9 @@ module.exports = {
         turn: {
           type: Sequelize.STRING,
         },
+        winner: {
+          type: Sequelize.STRING,
+        },
 
         player1Id: {
           type: Sequelize.INTEGER,
