@@ -253,8 +253,8 @@ var game = async () => {
       <input type="hidden" id="turn" value="player2" >
           <input type="hidden" id="status" value="Pending">
           <input type="hidden" id="winner" value="No">
-          <input class="text" value="${user.name}">
-          <button class="" onclick="selectUser(${user.id})">Sent Request</button>
+          <input class="text col-7" value="${user.name}">
+          <button class="col-5" onclick="selectUser(${user.id})">Sent Request</button>
          
         
         
@@ -279,9 +279,9 @@ var getGameId = async () => {
     games.forEach((game) => {
       if (game?.status != "Complete") {
         player1Id.innerHTML += `
-      <div class="d-flex  mt-3"><input class="" value="${game.Player2.name}">
+      <div class="d-flex  mt-3"><input class="col-7" value="${game.Player2.name}">
       
-              <button class="" onclick="gameBoard(${game.id}); ">Start Game</button>
+              <button class="col-5" onclick="gameBoard(${game.id}); ">Start Game</button>
               </div>
             
             
@@ -311,8 +311,8 @@ var notification = async () => {
       if (game?.status != "Complete") {
         submiter.innerHTML += `
           
-          <div class="d-flex mt-3 col-4"><input type="hidden" id="status" value="${game.status}" > <input value=" ${game.Player1.name}">
-          <button class="" onclick="updateStatus(${game.Player1.id},${game.id} ); ">Start</button></div>
+          <div class="d-flex mt-3 col-4"><input type="hidden" id="status" value="${game.status}" > <input class="col-5" value=" ${game.Player1.name}">
+          <button class="col-5" onclick="updateStatus(${game.Player1.id},${game.id} ); ">Start</button></div>
           
         
         `;
@@ -490,7 +490,7 @@ var showValues = async (gameId) => {
 };
 
 var checkWinner = async (gameId) => {
-  cocsole.log("wwww");
+  console.log("wwww");
   if (authUser?.name) {
     welcome.innerHTML = authUser?.name;
   } else {
@@ -513,8 +513,8 @@ var checkWinner = async (gameId) => {
 
     const wons = await data.json();
 
-    if (wons?.a == "X") {
-      window.alert(wons.game.player2.name + " " + "Player Won");
+    if (wons?.a) {
+      window.alert(wons?.a + " " + "Player Won");
       result.innerHTML = `${wons.a} Player Is Winner`;
 
       disableAll();
