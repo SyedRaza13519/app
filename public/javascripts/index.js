@@ -289,7 +289,7 @@ var getGameId = async () => {
       }
       if (game?.status == "Complete") {
         completed.innerHTML += `<div class="d-flex mt-3 col-10"><input class="col-5" type="text" id="status" value="${game.status}" > <input class="col-5" value=" ${game.Player1.name}">
-            </div>`;
+        <button class="" onclick="gameBoard(${game.id} ); ">Start</button> </div>`;
       }
     });
   }
@@ -319,7 +319,7 @@ var notification = async () => {
       }
       if (game?.status == "Complete") {
         completed.innerHTML += `<div class="d-flex mt-3 col-10"><input class="col-5" type="text" id="status" value="${game.status}" > <input class="col-5" value=" ${game.Player1.name}">
-      </div>`;
+        <button class="" onclick="gameBoard(${game.id} ); ">Start</button></div>`;
       }
     });
   }
@@ -429,6 +429,10 @@ var gameBoard = async (gameId) => {
     if (games?.turn) {
       playerTurn.innerHTML = games.turn;
     }
+    if (games?.winner != "No") {
+      window.alert(games?.winner);
+      disableAll();
+    }
   }
 
   showValues(gameId);
@@ -486,6 +490,7 @@ var showValues = async (gameId) => {
 };
 
 var checkWinner = async (gameId) => {
+  cocsole.log("wwww");
   if (authUser?.name) {
     welcome.innerHTML = authUser?.name;
   } else {
@@ -508,8 +513,8 @@ var checkWinner = async (gameId) => {
 
     const wons = await data.json();
 
-    if (wons?.a) {
-      window.alert(wons.a + " " + "Player Won");
+    if (wons?.a == "X") {
+      window.alert(wons.game.player2.name + " " + "Player Won");
       result.innerHTML = `${wons.a} Player Is Winner`;
 
       disableAll();

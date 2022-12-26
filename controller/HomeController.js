@@ -98,6 +98,7 @@ class HomeController {
       player2Id: req.params.userId,
       status: req.body.status,
       turn: req.body.turn,
+      winner: req.body.winner,
     };
 
     const data = await Game.create(play);
@@ -132,7 +133,7 @@ class HomeController {
     const result = await Game.findOne({
       where: { id: req.params.gameId },
     });
-    console.log(result);
+
     return res.json(result);
   }
 
@@ -200,6 +201,7 @@ class HomeController {
   static async checkWinner(req, res, next) {
     const result = await GameState.findAll({
       include: Game,
+
       where: {
         gameId: req.params.gameId,
       },
@@ -227,27 +229,27 @@ class HomeController {
         let a = gameState[winCondition[0]];
         let b = gameState[winCondition[1]];
         let c = gameState[winCondition[2]];
+        if (a != "" && b != "" && c != "") {
+          if (a === b && b === c) {
+            console.log(a);
+            const play = {
+              winner: a,
+              status: "Complete",
+            };
+            console.log(play);
+            await Game.update(play, {
+              where: {
+                id: req.params.gameId,
+              },
+            });
 
-        if (a === b && b === c) {
-          console.log(a);
-          const play = {
-            winner: a,
-            status: "Complete",
-          };
-          console.log(play);
-          await Game.update(play, {
-            where: {
-              id: req.params.gameId,
-            },
-          });
-
-          return res.json({ a });
+            return res.json({ a });
+          }
         }
       }
     }
-  }
-  catch(err) {
-    console.log(err);
+
+    return res.json(result);
   }
 
   static async getAllValues(req, res, next) {
