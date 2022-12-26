@@ -9,7 +9,7 @@ router.post("/login", HomeController.login);
 router.get("/profile", authenticate, HomeController.profile);
 router.get("/users", authenticate, HomeController.index);
 
-router.post("/users", authenticate, HomeController.creatUser);
+router.post("/users", HomeController.creatUser);
 
 router.put("/update-account", authenticate, HomeController.updateUser);
 router.delete("/remove-account", authenticate, HomeController.deleteUser);
