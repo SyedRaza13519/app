@@ -9,7 +9,7 @@ router.post("/login", HomeController.login);
 router.get("/profile", authenticate, HomeController.profile);
 router.get("/users", authenticate, HomeController.index);
 
-router.post("/users", HomeController.creatUser);
+router.post("/users", authenticate, HomeController.creatUser);
 
 router.put("/update-account", authenticate, HomeController.updateUser);
 router.delete("/remove-account", authenticate, HomeController.deleteUser);
@@ -31,6 +31,6 @@ router.delete(
   authenticate,
   HomeController.deleteAllValues
 );
-router.put("/checkWinner/:gameId", HomeController.checkWinner);
+router.put("/checkWinner/:gameId", authenticate, HomeController.checkWinner);
 
 module.exports = router;
